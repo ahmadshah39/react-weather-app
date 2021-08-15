@@ -32,8 +32,8 @@ function App() {
   };
   const light = {
     text: "#5d5d5d",
-    cardBG: "#6defd1",
-    bodyBg: "#e1fff8",
+    cardBG: "#e6e6e6",
+    bodyBg: "#f5f5f5",
   };
   return (
     <ThemeProvider theme={theme === true ? light : dark}>
