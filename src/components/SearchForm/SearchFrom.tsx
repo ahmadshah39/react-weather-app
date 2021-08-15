@@ -34,7 +34,7 @@ const SearchFrom = () => {
           onChange={onChange}
         />
         <button className="search-submit" type="submit">
-         <img src={`/icons/search-solid.svg`} alt="Search"/>
+         <img src={`${process.env.PUBLIC_URL}/icons/search-solid.svg`} alt="Search"/>
         </button>
       </form>
     </Wrapper>

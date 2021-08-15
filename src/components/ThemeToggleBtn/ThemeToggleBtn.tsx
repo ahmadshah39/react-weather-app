@@ -11,7 +11,7 @@ const ThemeToggleBtn = () => {
     <Wrapper>
     
         <div className="nav">
-          <a href="#!" onClick={onClick}><img src={`/icons/${theme === true ? 'moon-solid' : 'sun-regular'}.svg`} alt="theme switcher"/></a>   
+          <a href="#!" onClick={onClick}><img src={`${process.env.PUBLIC_URL}/icons/${theme === true ? 'moon-solid' : 'sun-regular'}.svg`} alt="theme switcher"/></a>   
         </div>
 
     </Wrapper>
