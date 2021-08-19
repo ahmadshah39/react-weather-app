@@ -1,6 +1,11 @@
 import { createContext, useReducer } from "react";
 import GlobalReducer from "./GlobalReducer";
-import { SearchLocationData, LocationWeekForcast, Daily, UserLocationData } from "./Interfaces";
+import {
+  SearchLocationData,
+  LocationWeekForcast,
+  Daily,
+  UserLocationData,
+} from "./Interfaces";
 import {
   GET_SEARCHED_LOCATION,
   GET_WEEK_FORECAST,
@@ -13,7 +18,7 @@ import {
   SET_THEME,
 } from "./ActionTypes";
 // Types
-const API_KEY = "56c9248f68b3e3c4dd4a7f59bfdc1ad0";
+const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 export type State = {
   UserLocation: UserLocationData | null;
   SearchedLocation: SearchLocationData | null;
@@ -26,7 +31,7 @@ export type State = {
 
 export interface IGlobalContextPorps {
   getSerachedLocationData: (text: string) => void;
-  getUserLocationWeather: ()=>void;
+  getUserLocationWeather: () => void;
   getSerachedLocationWeekForecast: (lat: number | "", lon: number | "") => void;
   setWeatherDay: (daily: Daily) => void;
   setLoading: () => void;
@@ -74,20 +79,19 @@ export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
   //   Actions
 
   //   getUserLocation Weather data
-const   getUserLocationWeather = async () => {
+  const getUserLocationWeather = async () => {
     navigator.geolocation.getCurrentPosition(fetchUserLocationWeather);
-}
-const fetchUserLocationWeather = async (success:any) => {
-
-    let {latitude, longitude } = success.coords;
-    const url =`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely,daily&units=metric&appid=${API_KEY}`;
+  };
+  const fetchUserLocationWeather = async (success: any) => {
+    let { latitude, longitude } = success.coords;
+    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely,daily&units=metric&appid=${API_KEY}`;
     try {
       const res = await (await fetch(url)).json();
       getSerachedLocationWeekForecast(res.lat, res.lon);
-        dispatch({
-          type: GET_USER_LOCATION,
-          payload: res,
-        });
+      dispatch({
+        type: GET_USER_LOCATION,
+        payload: res,
+      });
       setTimeout(() => dispatch({ type: ClEAR_ERROR }), 5000);
     } catch (err) {
       console.log(err);
@@ -95,18 +99,17 @@ const fetchUserLocationWeather = async (success:any) => {
         type: CLEAR_ALL,
       });
     }
-
-}
+  };
 
   // Get Weather Data of Searched Loacation
   const getSerachedLocationData = async (text: string) => {
     const location = text === "" ? "London" : text;
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${API_KEY}`;
-   
+
     try {
       const res = await (await fetch(url)).json();
       if (res.cod === 200) {
-      getSerachedLocationWeekForecast(res.coord.lat, res.coord.lon);
+        getSerachedLocationWeekForecast(res.coord.lat, res.coord.lon);
         dispatch({
           type: GET_SEARCHED_LOCATION,
           payload: res,
@@ -132,8 +135,7 @@ const fetchUserLocationWeather = async (success:any) => {
     lon: number | ""
   ) => {
     if (lat !== "" && lon !== "") {
-      const url =
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely,&units=metric&appid=${API_KEY}`;
+      const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely,&units=metric&appid=${API_KEY}`;
       try {
         const res = await (await fetch(url)).json();
         dispatch({

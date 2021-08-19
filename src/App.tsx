@@ -23,23 +23,23 @@ function App() {
   const { error, loading, theme, getUserLocationWeather } = globalContext;
   useEffect(() => {
     getUserLocationWeather();
-  // eslint-disable-next-line
-  }, [])
+    // eslint-disable-next-line
+  }, []);
   const dark = {
     text: "#fff",
-    cardBG: "#2d2d3c",
-    bodyBg: "#23232f",
+    cardBG: "#8744ff2b",
+    bodyBg: "#15003a",
   };
   const light = {
     text: "#5d5d5d",
-    cardBG: "#e6e6e6",
-    bodyBg: "#f5f5f5",
+    cardBG: "#ffffff94",
+    bodyBg: "#a4fff8ad",
   };
   return (
     <ThemeProvider theme={theme === true ? light : dark}>
       <BodyWrapper>
         {loading && <LoadingBar />}
-        <ThemeToggleBtn/>
+        <ThemeToggleBtn />
         <Container>
           {error && <Alert error={error} />}
           <Title>Weather Today</Title>
